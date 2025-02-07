@@ -67,6 +67,7 @@ class RobotUseCases():
         Returns:
             Robot: Entidade do robô
         """
+        robot.jointPosition = robotGateway.getJointPose()
         robot.tcpPosition = robotGateway.getTcpPose()
         robot.tcpForce = robotGateway.getTcpForce()
         return robot

@@ -16,6 +16,9 @@ class RobotExternalInterface():
     
     """
     @abstractmethod
+    def getJointPositionFromRobot() -> list: return list
+    
+    @abstractmethod
     def getTcpPositionFromRobot() -> list: return list
     
     @abstractmethod

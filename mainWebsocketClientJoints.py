@@ -27,18 +27,28 @@ registroDadosRobo = Ur5eObj()
 apresentadorDeDados = robotWsPresenter()
 apresentadorDeDadosLib = robotWsPresenterLib()
 
-conectar = RobotController.connectToRobot(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados)
-# novaPosicao = RobotController.moveTcp(comunicacaoComRobo, registroDadosRobo, poseDesired=json.loads(conectar)["tcpPosition"], speed = 0.13 ) 
-# exit()
-# novaPosicao = RobotController.moveTcp(comunicacaoComRobo, registroDadosRobo,  speed = 0.13 ) 
-# print()
+#Conectar com o robô
+conectar = RobotController.connectToRobot(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados) #Conecta com o robô
+print(conectar)
+rodarCodigo = RobotController.runCode(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados) #Roda o código no robô
+print(rodarCodigo)
+
+
+class temp:
+    initialTemp = 0
+    
+initialTempTime = temp()
 
 def on_message(ws, message):
     message = json.loads(message)
     # time.sleep(2)
-    # print(time.time() - initialTempTime.initialTemp)
+    temp = (time.time() - initialTempTime.initialTemp) * 1000
+    
     # print(f"Mensagem recebida: {message}")
     
+    if temp < 8:
+        return
+    print(temp , "ms")
     info = RobotController.getRobotInfo(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados) #apresentadorDeDadosLib
     payload = {
         "Token": token.value,
@@ -47,18 +57,18 @@ def on_message(ws, message):
     # print(payload)
     ws.send(json.dumps(payload))
     
-    if message["Token"] != token.value:
-        print("Token inválido")
+    # if message["Token"] != token.value:
+    #     print("Token inválido")
         
         # RobotController.moveTcp(comunicacaoComRobo, registroDadosRobo, poseDesired = info["data"]["tcpPosition"], speed= 0.1)
-        return 
+        # return 
     
     # posicao = [message["X"],message["Y"],message["Z"],message["Pulse_1"],message["Pulse_2"],message["Pulse_3"]]
     posicao = [message["Base"],message["Shoulder"],message["Elbow"],message["Pulse_1"],message["Pulse_2"],message["Pulse_3"]]
     # posicaoTcp = [message["X"],message["Y"],message["Z"]]
-    print("Movendo para: ", posicao)
+    # print("Movendo para: ", posicao)
     RobotController.moveJoint(comunicacaoComRobo, registroDadosRobo, poseDesired = posicao)
-
+    initialTempTime.initialTemp = time.time()
 
 def on_error(ws, error):
     print(f"Erro: {error}")

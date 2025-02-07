@@ -60,8 +60,10 @@ class RobotController():
         
         
         robot = RobotUseCases.saveRobotInfo(robot, robotDataGateway)
-        
-        robot = RobotController.runCode(robotExternal, roboDataExternal)
+        robot = RobotController.getRobotInfo(robotExternal, roboDataExternal)
+        robot = RobotUseCases.saveRobotInfo(robot, robotDataGateway)
+        # robot = RobotController.runCode(robotExternal, roboDataExternal)
+        # print(robot.isConnected)
         
         print(robot)
         return robotPresenter.adaptData(robot)
@@ -109,10 +111,13 @@ class RobotController():
         
         robot = RobotController.getRobotInfo(robotExternal, roboDataExternal)
         
-        actualPose = robot.tcpPosition
-        print("Posição atual no momento da conexão", actualPose)
+        print(robot.isConnected)
         
-        robot = RobotUseCases.sendPosToRobot(robot, actualPose, 1,robotGateway)
+        actuaTcplPose = robot.tcpPosition
+        actuaJointPose = robot.jointPosition
+        print("Posição atual no momento da conexão", actuaTcplPose)
+        
+        robot = RobotUseCases.sendPosToRobot(robot, actuaJointPose, 0,robotGateway)
         robot = RobotUseCases.runCodeOnRobot(robot, robotGateway) 
         robot = RobotUseCases.saveRobotInfo(robot, robotDataGateway)
         
@@ -163,8 +168,8 @@ class RobotController():
         
         if poseDesired is None: poseDesired = robot.tcpPosition
         
+        #Caso queira usar uma sequencia de posições, planejando a rota dentro do código
         path = PathUseCases.createRobotPath(robot.tcpPosition, poseDesired, speed)
-        
         robot = RobotUseCases.setRobotPath(path, robot)
         
         robot = RobotUseCases.saveRobotInfo(robot, robotDataGateway)

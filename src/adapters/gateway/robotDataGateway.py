@@ -68,6 +68,7 @@ class RobotDataGateway(RoboDataGatewayInterface):
         
         robot = Robot(None,
                       None,
+                      None,
                       path,
                      robotDto.isConnected,
                      robotDto.codeIsRuunig,

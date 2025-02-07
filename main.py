@@ -12,7 +12,7 @@ from src.adapters.presenter.robotWsPresenter import robotWsPresenter #Presenter 
 from src.adapters.controller.robotController import RobotController #Controller do robô, que faz a comunicação com o datasource e a integração com o robo fisico, aplicando as regras de negócio.
 import time
 
-from src.external.integrations.mitsubishConn import mitsubishConn
+# from src.external.integrations.mitsubishConn import mitsubishConn
 
 #Função que irá enviar as posições ao robô em tempo real, em segundo plano.
 def getRobotPositionsRealTime(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados):
@@ -21,6 +21,8 @@ def getRobotPositionsRealTime(comunicacaoComRobo, registroDadosRobo, apresentado
         print(info)
         
 stop_event = threading.Event()
+
+# [-0.1256497542010706, -1.5887053648578089, -2.1571314970599573, -1.008080784474508, 1.5536009073257446, -0.3029282728778284]
 
 ##############################################################################################################
 
@@ -36,11 +38,15 @@ apresentadorDeDados = robotWsPresenter() #Presenter de dados do robô
 #Conectar com o robô
 conectar = RobotController.connectToRobot(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados) #Conecta com o robô
 print(conectar)
+# rodarCodigo = RobotController.runCode(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados) #Roda o código no robô
+# print(rodarCodigo)
 
 #Iniciar thread de envio de posições ao robô
 dataThread = threading.Thread(target=getRobotPositionsRealTime, args=(comunicacaoComRobo, registroDadosRobo, apresentadorDeDados))
 dataThread.start()
 
+while True:
+    pass
 
 #Lista de posições que o robô irá se movimentar
 randomPoseList = [ 

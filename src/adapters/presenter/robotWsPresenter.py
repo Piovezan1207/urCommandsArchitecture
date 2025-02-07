@@ -28,6 +28,7 @@ class robotWsPresenter(RobotAdapterInterface):
             str: JSON com as informações do robô
         """
         data = {
+            "jointPosition": robot.jointPosition.tolist(),
             "tcpPosition": robot.tcpPosition.tolist(),
             "tcpForce": robot.tcpForce.tolist(),
         }
@@ -81,7 +82,7 @@ class robotRawPresenter(RobotAdapterInterface):
         Retorna a entidade robô, da mesma maneira que ela existe dentro da arquitetura.
         """
         pass
-    def adaptData(self, robot: Robot):
+    def adaptData(self, robot: Robot) -> Robot:
         """
             Retorna os dados do robô sem formatação.
 

@@ -6,6 +6,7 @@ class Robot:
     Entidade Robot, representa o robô real, contendo todas as suas informações de posição, força e caminho.
     
     Args:
+        jointPosition (list): Posição das juntas.
         tcpPosition (list): Posição do TCP.
         tcpForce (list): Força do TCP.
         path (Path): Caminho do robô.
@@ -15,6 +16,7 @@ class Robot:
         
     """
     def __init__(self, 
+                 jointPosition: list,
                  tcpPosition: list,
                  tcpForce: list,
                  path: Path,
@@ -27,6 +29,7 @@ class Robot:
         Entidade Robot, representa o robô real, contendo todas as suas informações de posição, força e caminho.
         
         Args:
+            jointPosition (list): Posição das juntas.
             tcpPosition (list): Posição do TCP.
             tcpForce (list): Força do TCP.
             path (Path): Caminho do robô.
@@ -37,6 +40,7 @@ class Robot:
         """
 
         self._isConnected = isConnected
+        self._jointPosition = jointPosition
         self._tcpPosition = tcpPosition
         self._tcpForce = tcpForce
         self._path = path
@@ -67,7 +71,15 @@ class Robot:
     @isConnected.setter
     def isConnected(self, value: bool):
         self._isConnected = value
-        
+    
+    @property
+    def jointPosition(self) -> list:
+        return self._jointPosition
+    
+    @jointPosition.setter
+    def jointPosition(self, value: list):
+        self._jointPosition = value
+    
     @property
     def tcpPosition(self) -> list:
         return self._tcpPosition

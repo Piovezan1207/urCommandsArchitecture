@@ -73,6 +73,15 @@ class RobotCoreGateway(RobotGatewayInterface):
         """
         return self._robotExternal.sendPositionToRobot(pose, positionType)
     
+    def getJointPose(self) -> list:
+        """
+        Implementa metodos externos para ler a posição de juntas do robô.
+        
+        Returns: 
+            bool: True se obteve suscesso na leitura, False se não obteve
+        """
+        return self._robotExternal.getJointPositionFromRobot()
+    
     def getTcpPose(self) -> list:
         """
         Implementa metodos externos para ler a posição TCP do robô.

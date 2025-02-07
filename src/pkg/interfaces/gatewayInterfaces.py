@@ -21,6 +21,9 @@ class RobotGatewayInterface():
     def disconnect(self) -> bool: return None #Deve retirnar o status da desconexão
     
     @abstractmethod
+    def getJointPose(self) -> list: return  None
+    
+    @abstractmethod
     def getTcpPose(self) -> list: return  None
     
     @abstractmethod

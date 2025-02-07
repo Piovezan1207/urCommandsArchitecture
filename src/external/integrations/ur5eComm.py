@@ -71,6 +71,20 @@ class Ur5eComm(RobotExternalInterface):
             return False
         
     
+    def getJointPositionFromRobot(self) -> list:
+        """
+        Pega posição de juntas atual do robô (Implementação da interface)
+        
+        returns:
+            list: Posição de juntas do robô : [base, ombro, cotovelo, pulso1, pulso2, pulso3] 
+        """
+        # Implement this method to get TCP position from the robot
+        if self._robot:
+            actualPos = self._robot.get_actual_joint_positions()
+            return actualPos
+        else:
+            raise Exception("O robô não existe na classe de integração externa. -> " + str(self))
+    
     def getTcpPositionFromRobot(self) -> list:
         """
         Pega posição do TCP atual do robô (Implementação da interface)
@@ -149,6 +163,7 @@ class Ur5eComm(RobotExternalInterface):
                             read_input_float_register(4),
                             read_input_float_register(5)]
                     position = get_inverse_kin(tempPosition)
+                    # movel(tempPosition, a=1.2, v=0.25, r=0)
                 else:
                     position = [read_input_float_register(0),
                             read_input_float_register(1),
@@ -156,6 +171,7 @@ class Ur5eComm(RobotExternalInterface):
                             read_input_float_register(3),
                             read_input_float_register(4),
                             read_input_float_register(5)]
+                    
                 end
                 
                 
